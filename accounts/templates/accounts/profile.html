@@ -1,0 +1,20 @@
+{% extends "base.html" %}
+
+{% block title %}My Profile | CourtSide{% endblock %}
+
+{% block content %}
+<section>
+    <h2>My Player Profile</h2>
+
+    <p>Username: {{ user.username }}</p>
+    <p>Email: {{ user.email }}</p>
+
+    <form method="post">
+        {% csrf_token %}
+
+        {{ form.as_p }}
+
+        <button type="submit">Save Profile</button>
+    </form>
+</section>
+{% endblock %}

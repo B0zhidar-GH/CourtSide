@@ -1,0 +1,62 @@
+{% extends "base.html" %}
+
+{% block title %}{{ tournament.name }} | CourtSide{% endblock %}
+
+{% block content %}
+<section>
+    <h2>{{ tournament.name }}</h2>
+
+    <p>{{ tournament.description }}</p>
+
+    <p>Location: {{ tournament.location }}</p>
+    <p>Surface: {{ tournament.get_surface_display }}</p>
+    <p>Status: {{ tournament.get_status_display }}</p>
+    <p>Start date: {{ tournament.start_date }}</p>
+    <p>End date: {{ tournament.end_date }}</p>
+    <p>Maximum players: {{ tournament.max_players }}</p>
+    <p>Organizer: {{ tournament.organizer.username }}</p>
+</section>
+
+<section>
+    <h3>Tournament Registration</h3>
+
+    {% if user.is_authenticated %}
+        {% if registration %}
+            <p>
+                Your registration status:
+                <strong>{{ registration.get_status_display }}</strong>
+            </p>
+        {% else %}
+            <a href="{% url 'tournament-register' tournament.pk %}">
+                Apply to Join
+            </a>
+        {% endif %}
+    {% else %}
+        <p>
+            <a href="{% url 'login' %}">
+                Log in to register for this tournament
+            </a>
+        </p>
+    {% endif %}
+</section>
+
+{% if user.is_authenticated and user == tournament.organizer %}
+<section>
+    <h3>Organizer Actions</h3>
+
+    <a href="{% url 'tournament-edit' tournament.pk %}">
+        Edit Tournament
+    </a>
+
+    <a href="{% url 'tournament-delete' tournament.pk %}">
+        Delete Tournament
+    </a>
+</section>
+{% endif %}
+
+<p>
+    <a href="{% url 'tournament-list' %}">
+        Back to Tournaments
+    </a>
+</p>
+{% endblock %}

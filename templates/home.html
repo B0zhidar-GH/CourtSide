@@ -1,0 +1,37 @@
+{% extends "base.html" %}
+
+{% block title %}Home | CourtSide{% endblock %}
+
+{% block content %}
+<section>
+    <h2>Welcome to CourtSide</h2>
+
+    <p>
+        Discover amateur tennis tournaments, compete with other players,
+        and follow your tennis journey.
+    </p>
+
+    <a href="{% url 'tournament-list' %}">
+        Explore Tournaments
+    </a>
+</section>
+
+<section>
+    {% if user.is_authenticated %}
+        <h2>Welcome back, {{ user.username }}!</h2>
+
+        <p>Ready to play some tennis?</p>
+
+        <a href="{% url 'profile' %}">
+            View My Player Profile
+        </a>
+    {% else %}
+        <h2>Join the Community</h2>
+
+        <p>Create an account to register for tournaments.</p>
+
+        <a href="{% url 'register' %}">Create Account</a>
+        <a href="{% url 'login' %}">Log In</a>
+    {% endif %}
+</section>
+{% endblock %}

@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+
+{% block title %}Create Tournament | CourtSide{% endblock %}
+
+{% block content %}
+<section>
+    <h2>Create a Tournament</h2>
+
+    <form method="post">
+        {% csrf_token %}
+
+        {{ form.as_p }}
+
+        <button type="submit">Create Tournament</button>
+    </form>
+
+    <a href="{% url 'tournament-list' %}">
+        Cancel
+    </a>
+</section>
+{% endblock %}

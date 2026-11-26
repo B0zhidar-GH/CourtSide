@@ -1,0 +1,38 @@
+{% extends "base.html" %}
+
+{% block title %}Tournaments | CourtSide{% endblock %}
+
+{% block content %}
+<section>
+    <h2>Available Tournaments</h2>
+
+    {% if user.is_authenticated %}
+        <a href="{% url 'tournament-create' %}">
+            Create Tournament
+        </a>
+    {% endif %}
+
+    {% if tournaments %}
+        <div class="tournament-list">
+            {% for tournament in tournaments %}
+                <article class="tournament-card">
+                    <h3>
+                        <a href="{% url 'tournament-detail' tournament.pk %}">
+                            {{ tournament.name }}
+                        </a>
+                    </h3>
+
+                    <p>Location: {{ tournament.location }}</p>
+                    <p>Surface: {{ tournament.get_surface_display }}</p>
+                    <p>Status: {{ tournament.get_status_display }}</p>
+                    <p>Start: {{ tournament.start_date }}</p>
+                    <p>End: {{ tournament.end_date }}</p>
+                    <p>Maximum players: {{ tournament.max_players }}</p>
+                </article>
+            {% endfor %}
+        </div>
+    {% else %}
+        <p>No tournaments have been created yet.</p>
+    {% endif %}
+</section>
+{% endblock %}

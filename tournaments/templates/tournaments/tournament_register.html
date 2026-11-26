@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+
+{% block title %}Register for Tournament | CourtSide{% endblock %}
+
+{% block content %}
+<section>
+    <h2>Register for {{ tournament.name }}</h2>
+
+    <p>Do you want to apply to join this tournament?</p>
+
+    <form method="post">
+        {% csrf_token %}
+
+        {{ form.as_p }}
+
+        <button type="submit">Apply to Tournament</button>
+    </form>
+
+    <a href="{% url 'tournament-detail' tournament.pk %}">
+        Cancel
+    </a>
+</section>
+{% endblock %}
