@@ -44,6 +44,10 @@
 <section>
     <h3>Organizer Actions</h3>
 
+    <a href="{% url 'tournament-registrations' tournament.pk %}">
+        View applicants
+    </a>
+
     <a href="{% url 'tournament-edit' tournament.pk %}">
         Edit Tournament
     </a>

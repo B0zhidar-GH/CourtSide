@@ -1,0 +1,50 @@
+
+{% extends "base.html" %}
+
+{% block content %}
+<div class="page-container">
+    <h1>Schedule a Match</h1>
+
+    <h2>{{ view.tournament.name }}</h2>
+
+    <form method="post">
+        {% csrf_token %}
+
+        {% if form.non_field_errors %}
+            <div class="form-errors">
+                {{ form.non_field_errors }}
+            </div>
+        {% endif %}
+
+        {% for field in form %}
+            <div class="form-field">
+                <label for="{{ field.id_for_label }}">
+                    {{ field.label }}
+                </label>
+
+                {{ field }}
+
+                {% if field.help_text %}
+                    <p class="help-text">
+                        {{ field.help_text }}
+                    </p>
+                {% endif %}
+
+                {% if field.errors %}
+                    <div class="field-errors">
+                        {{ field.errors }}
+                    </div>
+                {% endif %}
+            </div>
+        {% endfor %}
+
+        <button type="submit">
+            Create Match
+        </button>
+    </form>
+
+    <a href="{% url 'tournament-detail' view.tournament.pk %}">
+        Back to tournament
+    </a>
+</div>
+{% endblock %}

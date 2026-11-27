@@ -1,0 +1,57 @@
+
+{% extends "base.html" %}
+
+{% block content %}
+<div class="page-container">
+    <h1>Applicants for {{ tournament.name }}</h1>
+
+    {% if registrations %}
+        {% for registration in registrations %}
+            <section class="registration-card">
+                <h2>{{ registration.player.username }}</h2>
+
+                <p>
+                    Status:
+                    {{ registration.get_status_display }}
+                </p>
+
+                <p>
+                    Applied:
+                    {{ registration.registered_at }}
+                </p>
+
+                {% if registration.status == "pending" %}
+                    <form
+                        method="post"
+                        action="{% url 'manage-registration' tournament.pk registration.pk %}"
+                    >
+                        {% csrf_token %}
+
+                        <button
+                            type="submit"
+                            name="action"
+                            value="approve"
+                        >
+                            Approve
+                        </button>
+
+                        <button
+                            type="submit"
+                            name="action"
+                            value="reject"
+                        >
+                            Reject
+                        </button>
+                    </form>
+                {% endif %}
+            </section>
+        {% endfor %}
+    {% else %}
+        <p>No players have applied yet.</p>
+    {% endif %}
+
+    <a href="{% url 'tournament-detail' tournament.pk %}">
+        Back to tournament
+    </a>
+</div>
+{% endblock %}
